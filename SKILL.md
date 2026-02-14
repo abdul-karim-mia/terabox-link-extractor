@@ -4,7 +4,7 @@ metadata:
   {
     "openclaw":
       {
-        "requires": { "bins": ["node"], "env": ["TERABOX_API_KEY", "API_KEY"], "config": [] },
+        "requires": { "bins": ["node"], "env": ["TERABOX_API_KEY"], "config": [] },
         "primaryEnv": "TERABOX_API_KEY"
       }
   }
