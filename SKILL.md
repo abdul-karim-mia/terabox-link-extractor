@@ -1,5 +1,5 @@
 name: terabox-link-extractor
-description: "Direct link extraction from TeraBox URLs using the XAPIverse protocol. Extracts high-speed download and stream links (360p/480p) without browser session requirements. Use when the user provides a TeraBox link and wants to download or stream content directly."
+description: "Direct link extraction from TeraBox URLs using the XAPIverse protocol. Extracts high-speed download and stream links (All Resolutions) without browser session requirements. Use when the user provides a TeraBox link and wants to download or stream content directly."
 metadata:
   {
     "openclaw":
@@ -18,6 +18,32 @@ High-performance extraction of direct assets from TeraBox using the browser-less
 - **Primary Interaction**: Use the adaptive logic in `handler.js`. See [api-reference.md]({baseDir}/references/api-reference.md) for command specs and [changelog.md]({baseDir}/references/changelog.md) for version history.
 - **Secondary Interaction**: Use CLI via `node scripts/extract.js <url>`.
 
+## 🛠 AI Protocol (Strict)
+
+### 1. Automatic Triggering
+- **Detect**: Trigger this skill **immediately** when a user provides a URL containing `terabox.com`, `1024tera.com`, or `teraboxapp.com`.
+- **Immediate Execution**: Do not ask for permission. Extract the links directly.
+
+### 2. Mandatory Response Format
+You MUST present the extraction results as a text-only report. **DO NOT use interactive buttons.**
+
+**Format per file:**
+📦 **Name**: [name]
+📁 **Type**: [type] | 📺 **Quality**: [quality]
+📏 **Size**: [size_formatted] | ⏱️ **Duration**: [duration]
+🔗 **Links**:
+ - [▶️ Slow Stream](stream_url)
+ - [▶️ Fast {res} Stream](link) *(List all available resolutions)*
+ - [⬇️ Fast Download](fast_download_link)
+ - [⬇️ Slow Download](download_link)
+
+💳 **Credits Remaining**: [free_credits_remaining]
+
+### 3. Usage Rules
+- **No Conversation Filler**: Avoid "Certainly, Sir" or "Here is the extraction." Output the data directly.
+- **Dynamic Resolutions**: Always list all resolutions found in the `fast_stream_url` object.
+- **Authentication**: All operations are credentials-managed via `ctx.env`.
+
 ## Setup
 
 ### 1. Obtain Credentials
@@ -30,45 +56,6 @@ Add the `apiKey` to the skill's entry in `openclaw.json`:
   "apiKey": "sk_..."
 }
 ```
-
-## Usage
-
-Provide any valid TeraBox URL to your agent.
-
-- **Command:** Automatically triggered by the agent or manually via `node scripts/extract.js <url>`.
-
-## LLM Operational Protocol (The XAPIverse Protocol)
-
-### Extraction Execution
-- **Command**: `node skills/terabox-link-extractor/scripts/extract.js "<url>" [flags]`
-- **Authentication**: Automatic via environment-injected keys.
-- **Handling**: Parse the pipe-delimited (`|`) output to construct the response.
-
-### Flags
-- `--download`: Download the file(s) instead of just showing links.
-- `--out <path>`: Specify download subdirectory (Must be within `workspace/Downloads`).
-- `--quality <val>`: (Future) Select stream quality.
-
-### Mandatory Output Format (Extraction Mode)
-When extraction is successful, present the information exactly as follows for each file:
-
-- **Name**: [name]
-- **Size**: [size] | **Duration**: [duration]
-- **Links**:
-  - [▶️ Slow Stream](stream_url)
-  - [▶️ Fast 480p Stream](fast_stream_url[480p])
-  - [▶️ Fast 360p Stream](fast_stream_url[360p])
-  - [⬇️ Fast Download](fast_download_link)
-  - [⬇️ Slow Download](download_link)
-- **Credits Remaining**: [free_credits_remaining]
-
-### Mandatory Output Format (Download Mode)
-- **Status**: [STATUS]
-- **Location**: [DOWNLOAD_COMPLETE path]
-
-### Troubleshooting
-- **Credits Exhausted**: Inform the user if all configured keys have reached their daily limit.
-- **Invalid Link**: If the API returns an error, verify the URL format with the user.
 
 ---
 Developed for the OpenClaw community by [Abdul Karim Mia](https://github.com/abdul-karim-mia).
