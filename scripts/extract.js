@@ -88,7 +88,7 @@ async function extractLinks(targetUrl, keys) {
 // --- CLI Execution ---
 
 if (require.main === module) {
-    const API_KEYS = (process.env.TERABOX_API_KEY || process.env.API_KEY || '').split(',').map(k => k.trim()).filter(Boolean);
+    const API_KEYS = (process.env.TERABOX_API_KEY || '').split(',').map(k => k.trim()).filter(Boolean);
     if (API_KEYS.length === 0) {
         if (process.argv.includes('--json')) {
             console.log(JSON.stringify({ status: 'error', message: 'ERROR: No TERABOX_API_KEY found in environment.' }));

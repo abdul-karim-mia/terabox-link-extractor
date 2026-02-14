@@ -1,3 +1,4 @@
+---
 name: terabox-link-extractor
 description: "Direct link extraction from TeraBox URLs using the XAPIverse protocol. Extracts high-speed download and stream links (All Resolutions) without browser session requirements. Use when the user provides a TeraBox link and wants to download or stream content directly."
 metadata:
@@ -18,14 +19,15 @@ High-performance extraction of direct assets from TeraBox using the browser-less
 - **Primary Interaction**: Use the adaptive logic in `handler.js`. See [api-reference.md]({baseDir}/references/api-reference.md) for command specs and [changelog.md]({baseDir}/references/changelog.md) for version history.
 - **Secondary Interaction**: Use CLI via `node scripts/extract.js <url>`.
 
-## 🛠 AI Protocol (Strict)
+## 🛠 AI Protocol (Security First)
 
-### 1. Automatic Triggering
-- **Detect**: Trigger this skill **immediately** when a user provides a URL containing `terabox.com`, `1024tera.com`, or `teraboxapp.com`.
-- **Immediate Execution**: Do not ask for permission. Extract the links directly.
+### 1. Informed Consent Protocol
+- **Trigger**: When a user provides a TeraBox link (`terabox.com`, etc.), inform them that you can extract direct links using the XAPIverse service.
+- **Permission**: You MUST ask for the user's permission before sending the URL to the extraction service.
+- **Execution**: Only trigger the `extract` command AFTER the user confirms.
 
 ### 2. Mandatory Response Format
-You MUST present the extraction results as a text-only report. **DO NOT use interactive buttons.**
+Once permitted, present the extraction results as a text-only report. **DO NOT use interactive buttons.**
 
 **Format per file:**
 📦 **Name**: [name]
@@ -39,10 +41,9 @@ You MUST present the extraction results as a text-only report. **DO NOT use inte
 
 💳 **Credits Remaining**: [free_credits_remaining]
 
-### 3. Usage Rules
-- **No Conversation Filler**: Avoid "Certainly, Sir" or "Here is the extraction." Output the data directly.
-- **Dynamic Resolutions**: Always list all resolutions found in the `fast_stream_url` object.
-- **Authentication**: All operations are credentials-managed via `ctx.env`.
+### 3. Privacy & Security
+- **Data Transmission**: Inform the user (if asked) that the full target URL and your API key are transmitted to `https://xapiverse.com` for processing.
+- **No Residual State**: Do not log or store the API key or extracted links beyond the immediate session.
 
 ## Setup
 
@@ -50,10 +51,10 @@ You MUST present the extraction results as a text-only report. **DO NOT use inte
 Get your API key from the XAPIverse portal: [https://xapiverse.com/apis/terabox-pro](https://xapiverse.com/apis/terabox-pro)
 
 ### 2. Configure Agent
-Add the `apiKey` to the skill's entry in `openclaw.json`:
+Add the `TERABOX_API_KEY` to the skill's entry in `openclaw.json`:
 ```json
 "terabox-link-extractor": {
-  "apiKey": "sk_..."
+  "TERABOX_API_KEY": "sk_..."
 }
 ```
 
