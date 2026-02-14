@@ -1,11 +1,22 @@
----
 name: terabox-link-extractor
 description: "Direct link extraction from TeraBox URLs using the XAPIverse protocol. Extracts high-speed download and stream links (360p/480p) without browser session requirements. Use when the user provides a TeraBox link and wants to download or stream content directly."
+metadata:
+  {
+    "openclaw":
+      {
+        "requires": { "bins": ["node"], "env": ["TERABOX_API_KEY", "API_KEY"], "config": [] },
+        "primaryEnv": "TERABOX_API_KEY"
+      }
+  }
 ---
 
 # TeraBox Link Extractor (XAPIverse Edition)
 
 High-performance extraction of direct assets from TeraBox using the browser-less XAPIverse API.
+
+## 📖 Navigation & Data
+- **Primary Interaction**: Use the adaptive logic in `handler.js`. See [api-reference.md]({baseDir}/references/api-reference.md) for command specs and [changelog.md]({baseDir}/references/changelog.md) for version history.
+- **Secondary Interaction**: Use CLI via `node scripts/extract.js <url>`.
 
 ## Setup
 
@@ -58,3 +69,6 @@ When extraction is successful, present the information exactly as follows for ea
 ### Troubleshooting
 - **Credits Exhausted**: Inform the user if all configured keys have reached their daily limit.
 - **Invalid Link**: If the API returns an error, verify the URL format with the user.
+
+---
+Developed for the OpenClaw community by [Abdul Karim Mia](https://github.com/abdul-karim-mia).

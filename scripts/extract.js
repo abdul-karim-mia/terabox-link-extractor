@@ -3,10 +3,14 @@ const fs = require('fs');
 const path = require('path');
 
 const API_URL = 'https://xapiverse.com/api/terabox-pro';
-const API_KEYS = (process.env.API_KEY || '').split(',').map(k => k.trim()).filter(Boolean);
+const API_KEYS = (process.env.TERABOX_API_KEY || process.env.API_KEY || '').split(',').map(k => k.trim()).filter(Boolean);
 
 if (API_KEYS.length === 0) {
-    console.error('ERROR: No API_KEY found in environment.');
+    if (process.argv.includes('--json')) {
+        console.log(JSON.stringify({ status: 'error', message: 'ERROR: No TERABOX_API_KEY found in environment.' }));
+    } else {
+        console.error('ERROR: No TERABOX_API_KEY found in environment.');
+    }
     process.exit(1);
 }
 
@@ -16,7 +20,7 @@ let downloadFlag = false;
 
 // Security: Enforce Downloads directory
 const DOWNLOAD_ROOT = path.resolve(process.cwd(), 'Downloads');
-let outDir = DOWNLOAD_ROOT; 
+let outDir = DOWNLOAD_ROOT;
 
 let quality = 'original'; // Not fully supported for downloads yet (m3u8), but kept for arg parsing
 
@@ -25,8 +29,8 @@ for (let i = 0; i < args.length; i++) {
     if (args[i] === '--download') {
         downloadFlag = true;
     } else if (args[i] === '--out') {
-        if (args[i+1]) {
-            const potentialPath = path.resolve(DOWNLOAD_ROOT, args[i+1]);
+        if (args[i + 1]) {
+            const potentialPath = path.resolve(DOWNLOAD_ROOT, args[i + 1]);
             // Security Check: Prevent path traversal or absolute paths outside root
             if (!potentialPath.startsWith(DOWNLOAD_ROOT)) {
                 console.error(`ERROR: Security Violation. Output path must be within ${DOWNLOAD_ROOT}`);
@@ -36,8 +40,8 @@ for (let i = 0; i < args.length; i++) {
             i++;
         }
     } else if (args[i] === '--quality') {
-        if (args[i+1]) {
-            quality = args[i+1];
+        if (args[i + 1]) {
+            quality = args[i + 1];
             i++;
         }
     } else if (!targetUrl && !args[i].startsWith('--')) {
@@ -101,7 +105,7 @@ function downloadFile(fileUrl, destPath) {
                 file.close(resolve);
             });
         }).on('error', (err) => {
-            fs.unlink(destPath, () => {}); // Delete partial file
+            fs.unlink(destPath, () => { }); // Delete partial file
             reject(err);
         });
     });
@@ -163,7 +167,7 @@ async function main() {
                 console.log(`DL_LINK|${file.download_link}`);
                 console.log(`FAST_DL|${file.fast_download_link}`);
                 console.log(`STREAM|${file.stream_url}`);
-                
+
                 if (file.fast_stream_url) {
                     Object.entries(file.fast_stream_url).forEach(([res, link]) => {
                         console.log(`FAST_STREAM_${res}|${link}`);
@@ -171,12 +175,12 @@ async function main() {
                 }
             }
         }
-        
+
         if (!downloadFlag) {
-             console.log(`CREDITS|${successData.free_credits_remaining}`);
-             if (String(successData.free_credits_remaining).startsWith('0/')) {
-                 console.log('CREDITS_EXHAUSTED|TRUE');
-             }
+            console.log(`CREDITS|${successData.free_credits_remaining}`);
+            if (String(successData.free_credits_remaining).startsWith('0/')) {
+                console.log('CREDITS_EXHAUSTED|TRUE');
+            }
         }
 
     } else {
