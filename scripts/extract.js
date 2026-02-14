@@ -4,6 +4,11 @@ const path = require('path');
 
 const API_URL = 'https://xapiverse.com/api/terabox-pro';
 
+/**
+ * TeraBox Link Extractor Engine v1.4.0
+ * Standardized for TERABOX_API_KEY environment variables.
+ */
+
 function apiRequest(url, key) {
     return new Promise((resolve, reject) => {
         const data = JSON.stringify({ url });

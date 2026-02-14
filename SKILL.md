@@ -42,7 +42,7 @@ Once permitted, present the extraction results as a text-only report. **DO NOT u
 💳 **Credits Remaining**: [free_credits_remaining]
 
 ### 3. Privacy & Security
-- **Data Transmission**: Inform the user (if asked) that the full target URL and your API key are transmitted to `https://xapiverse.com` for processing.
+- **Data Transmission**: Inform the user (if asked) that the full target URL and your API key (TERABOX_API_KEY) are transmitted to `https://xapiverse.com` for processing.
 - **No Residual State**: Do not log or store the API key or extracted links beyond the immediate session.
 
 ## Setup
