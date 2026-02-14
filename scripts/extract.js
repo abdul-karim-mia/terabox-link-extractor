@@ -155,8 +155,12 @@ if (require.main === module) {
                     console.log('---FILE_START---');
                     console.log(`NAME|${file.name}`);
                     console.log(`SIZE|${file.size_formatted}`);
+                    console.log(`DURATION|${file.duration || 'N/A'}`);
+                    console.log(`TYPE|${file.type || 'N/A'}`);
                     console.log(`DL_LINK|${file.download_link}`);
+                    console.log(`FAST_DL|${file.fast_download_link || 'N/A'}`);
                     console.log(`STREAM|${file.stream_url}`);
+                    console.log(`THUMBNAIL|${file.thumbnail || 'N/A'}`);
                 }
             }
             if (!downloadFlag) console.log(`CREDITS|${successData.free_credits_remaining}`);
