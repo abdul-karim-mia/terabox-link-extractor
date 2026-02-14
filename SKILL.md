@@ -16,7 +16,7 @@ metadata:
 High-performance extraction of direct assets from TeraBox using the browser-less XAPIverse API.
 
 ## 📖 Navigation & Data
-- **Primary Interaction**: Use the adaptive logic in `handler.js`. See [api-reference.md]({baseDir}/references/api-reference.md) for command specs and [changelog.md]({baseDir}/references/changelog.md) for version history.
+- **Primary Interaction**: Use the adaptive logic in `handler.js`. See [api-reference.md](references/api-reference.md) for command specs and [changelog.md](references/changelog.md) for version history.
 - **Secondary Interaction**: Use CLI via `node scripts/extract.js <url>`.
 
 ## 🛠 AI Protocol (Security First)
