@@ -1,3 +1,4 @@
+---
 name: terabox-link-extractor
 description: "Direct link extraction from TeraBox URLs using the XAPIverse protocol. Extracts high-speed download and stream links (All Resolutions) without browser session requirements. Use when the user provides a TeraBox link and wants to download or stream content directly."
 metadata:
